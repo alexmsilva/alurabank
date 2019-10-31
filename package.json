@@ -1,0 +1,16 @@
+{
+  "name": "alurabank",
+  "version": "1.0.0",
+  "description": "A simple typescript project for learning proposal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc",
+    "dev": "tsc -w"
+  },
+  "author": "Alex de Melo Silva",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^3.6.4"
+  }
+}
