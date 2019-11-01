@@ -1,7 +1,5 @@
-import { Negociacoes } from '../models/Negociacoes';
-import { NegociacoesView } from '../views/NegociacoesView';
-import { MensagemView } from '../views/MensagemView';
-import { Negociacao } from '../models/Negociacao';
+import { Negociacao, Negociacoes } from '../models/index';
+import { MensagemView, NegociacoesView } from '../views/index';
 
 export class NegociacaoController {
 
