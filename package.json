@@ -6,11 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "tsc",
-    "dev": "tsc -w"
+    "watch": "tsc -w",
+    "dev": "lite-server --baseDir=app",
+    "start": "concurrently \"npm run watch\" \"npm run dev\""
   },
   "author": "Alex de Melo Silva",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^5.0.0",
+    "lite-server": "^2.5.4",
     "typescript": "^3.6.4"
   }
 }
