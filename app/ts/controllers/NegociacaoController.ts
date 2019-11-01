@@ -1,4 +1,9 @@
-class NegociacaoController {
+import { Negociacoes } from '../models/Negociacoes';
+import { NegociacoesView } from '../views/NegociacoesView';
+import { MensagemView } from '../views/MensagemView';
+import { Negociacao } from '../models/Negociacao';
+
+export class NegociacaoController {
 
     private _inputData: HTMLInputElement;
     private _inputQuantidade: HTMLInputElement;

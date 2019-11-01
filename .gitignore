@@ -4,6 +4,9 @@
 # Logs
 npm-debug.log*
 
+# IntelliJ configuration
+.idea/
+
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 

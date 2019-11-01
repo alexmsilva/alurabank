@@ -1,4 +1,4 @@
-abstract class View<T> {
+export abstract class View<T> {
 
     protected _elemento: Element;
 
@@ -12,4 +12,3 @@ abstract class View<T> {
 
     abstract template(model: T): string;
 }
-
