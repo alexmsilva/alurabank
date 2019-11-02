@@ -1,3 +1,5 @@
+import { logarTempoDeExecucao } from '../helpers/decorators/index';
+
 export abstract class View<T> {
 
     protected _elemento: Element | null;
@@ -6,6 +8,7 @@ export abstract class View<T> {
         this._elemento = document.querySelector(seletor);
     }
 
+    @logarTempoDeExecucao()
     update(model: T) {
         let template = this.template(model);
         if (this.scapeScript) {
