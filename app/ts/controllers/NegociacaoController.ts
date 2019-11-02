@@ -1,5 +1,6 @@
 import { Negociacao, Negociacoes } from '../models/index';
 import { MensagemView, NegociacoesView } from '../views/index';
+import { lazyDomInject } from '../helpers/decorators/index';
 
 const enum DiaDaSemana {
     DOMINGO,
@@ -13,17 +14,20 @@ const enum DiaDaSemana {
 
 export class NegociacaoController {
 
+    @lazyDomInject('#data')
     private _inputData: HTMLInputElement;
+
+    @lazyDomInject('#quantidade')
     private _inputQuantidade: HTMLInputElement;
+
+    @lazyDomInject('#valor')
     private _inputValor: HTMLInputElement;
+
     private _negociacoes = new Negociacoes();
     private _negociacoesView = new NegociacoesView('#negociacoesView');
     private _mensagemView = new MensagemView('#mensagemView');
 
     constructor() {
-        this._inputData = <HTMLInputElement>document.querySelector('#data');
-        this._inputQuantidade = <HTMLInputElement>document.querySelector('#quantidade');
-        this._inputValor = <HTMLInputElement>document.querySelector('#valor');
         this._negociacoesView.update(this._negociacoes);
     }
 
