@@ -1,13 +1,18 @@
 export abstract class View<T> {
 
-    protected _elemento: Element;
+    protected _elemento: Element | null;
 
-    constructor(seletor: string) {
+    constructor(private seletor: string, private scapeScript: boolean = true) {
         this._elemento = document.querySelector(seletor);
     }
 
     update(model: T) {
-        this._elemento.innerHTML = this.template(model);
+        let template = this.template(model);
+        if (this.scapeScript) {
+            template = template.replace(/<script>[sS]+<\/script>/g, '');
+        }
+
+        this._elemento!.innerHTML = template;
     }
 
     abstract template(model: T): string;
