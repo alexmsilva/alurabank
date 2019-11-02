@@ -1,6 +1,7 @@
 import { Negociacao, Negociacoes } from '../models/index';
 import { MensagemView, NegociacoesView } from '../views/index';
-import { lazyDomInject } from '../helpers/decorators/index';
+import { lazyDomInject, throttle } from '../helpers/decorators/index';
+import { NegociacaoService } from "../services/NegociocaoService";
 
 const enum DiaDaSemana {
     DOMINGO,
@@ -22,6 +23,8 @@ export class NegociacaoController {
 
     @lazyDomInject('#valor')
     private _inputValor: HTMLInputElement;
+
+    _service = new NegociacaoService();
 
     private _negociacoes = new Negociacoes();
     private _negociacoesView = new NegociacoesView('#negociacoesView');
@@ -50,6 +53,19 @@ export class NegociacaoController {
         this._negociacoes.adiciona(negociacao);
         this._negociacoesView.update(this._negociacoes);
         this._mensagemView.update('Negociação adicionada com sucesso!');
+    }
+
+    @throttle()
+    importNegociacoes(): void {
+        this._service
+            .obterNegociacoes((res: Response) => {
+                if (res.ok) return res;
+                throw new Error(res.statusText);
+            })
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                this._negociacoesView.update(this._negociacoes);
+            });
     }
 
     private _eDiaUtil(data: Date): boolean {
