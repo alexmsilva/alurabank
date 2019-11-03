@@ -2,6 +2,7 @@ import { Negociacao, Negociacoes } from '../models/index';
 import { MensagemView, NegociacoesView } from '../views/index';
 import { lazyDomInject, throttle } from '../helpers/decorators/index';
 import { NegociacaoService } from "../services/NegociocaoService";
+import { imprime } from '../helpers/index';
 
 const enum DiaDaSemana {
     DOMINGO,
@@ -53,6 +54,8 @@ export class NegociacaoController {
         this._negociacoes.adiciona(negociacao);
         this._negociacoesView.update(this._negociacoes);
         this._mensagemView.update('Negociação adicionada com sucesso!');
+
+        imprime(negociacao, this._negociacoes);
     }
 
     @throttle()
@@ -63,7 +66,12 @@ export class NegociacaoController {
                 throw new Error(res.statusText);
             })
             .then(negociacoes => {
-                negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                const negociacoesImportadas = this._negociacoes.paraArray();
+
+                negociacoes
+                    .filter(negociacao => ! negociacoesImportadas.some(nImportada => negociacao.ehIgual(nImportada)))
+                    .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+
                 this._negociacoesView.update(this._negociacoes);
             });
     }
