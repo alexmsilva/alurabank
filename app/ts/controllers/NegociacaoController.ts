@@ -59,21 +59,24 @@ export class NegociacaoController {
     }
 
     @throttle()
-    importNegociacoes(): void {
-        this._service
-            .obterNegociacoes((res: Response) => {
+    async importNegociacoes() {
+        try {
+            const negociacoes = await this._service.obterNegociacoes((res: Response) => {
                 if (res.ok) return res;
                 throw new Error(res.statusText);
-            })
-            .then(negociacoes => {
-                const negociacoesImportadas = this._negociacoes.paraArray();
-
-                negociacoes
-                    .filter(negociacao => ! negociacoesImportadas.some(nImportada => negociacao.ehIgual(nImportada)))
-                    .forEach(negociacao => this._negociacoes.adiciona(negociacao));
-
-                this._negociacoesView.update(this._negociacoes);
             });
+
+            const negociacoesImportadas = this._negociacoes.paraArray();
+
+            negociacoes
+                .filter(negociacao => ! negociacoesImportadas.some(nImportada => negociacao.ehIgual(nImportada)))
+                .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+
+            this._negociacoesView.update(this._negociacoes);
+
+        } catch(error) {
+            this._mensagemView.update(error);
+        }
     }
 
     private _eDiaUtil(data: Date): boolean {

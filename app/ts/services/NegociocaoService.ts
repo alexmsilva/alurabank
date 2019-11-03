@@ -11,7 +11,7 @@ export class NegociacaoService {
             )
             .catch(error => {
                 console.log(error);
-                return error
+                throw new Error('Não foi possível importar as negociações');
             });
     }
 }
